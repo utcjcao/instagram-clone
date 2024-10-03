@@ -1,8 +1,15 @@
-import logo from "./logo.svg";
-import "./App.css";
+import React, { useState, useEffect } from "react";
+import ImageDisplay from "./ImageDisplay";
+import ImageUploadButton from "./ImageUploadButton";
 
-function App() {
-  return <div className="App"></div>;
-}
+const App = () => {
+  const [images, setImages] = useState([]);
+  return (
+    <>
+      <ImageDisplay images={images}></ImageDisplay>
+      <ImageUploadButton setImages={setImages}></ImageUploadButton>
+    </>
+  );
+};
 
 export default App;
