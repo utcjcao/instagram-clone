@@ -21,7 +21,7 @@ function ImageDisplay({ images }) {
       }
     };
     fetchImages();
-  }, []);
+  });
 
   return (
     <div>
