@@ -1,7 +1,7 @@
 import React from "react";
-import { ref, uploadBytes } from "firebase/storage";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { storage, firestore } from "./Firebase";
-import { addDoc, collection, serverTimestamp } from "firebase/firestore";
+import { doc, setDoc, serverTimestamp } from "firebase/firestore";
 
 const ImageUploadButton = ({ setImages }) => {
   const handleFileChange = (e) => {
@@ -11,13 +11,18 @@ const ImageUploadButton = ({ setImages }) => {
       try {
         const storageRef = ref(storage, `uploads/${file.name}`);
         uploadBytes(storageRef, file);
-        firestore.collection("img").add({
+        setDoc(doc(firestore, "img_data", `${file.name}`), {
           filename: file.name,
+          timeUploaded: serverTimestamp(),
           url: getDownloadURL(storageRef),
-          createdAt: serverTimestamp(),
         });
-
-        console.log("Document written with ID: ", docRef.id);
+        db.collection("users")
+          .get()
+          .then((querySnapshot) => {
+            querySnapshot.forEach((doc) => {
+              console.log(`${doc.id} => ${doc.data()}`);
+            });
+          });
       } catch (e) {
         console.error("Error adding document: ", e);
       }

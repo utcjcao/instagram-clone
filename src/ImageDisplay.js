@@ -1,34 +1,31 @@
 import { React, useState, useEffect } from "react";
-import { storage } from "./Firebase";
-import { ref, listAll, getDownloadURL } from "firebase/storage";
+import { storage, firestore } from "./Firebase";
+import { collection, getDocs } from "firebase/firestore";
 
 function ImageDisplay({ images }) {
-  const [imageUrls, setImageUrls] = useState([]);
+  const [imageData, setImageData] = useState([]);
   useEffect(() => {
-    const fetchImages = async () => {
-      const imagesRef = ref(storage, "uploads/");
-      try {
-        const response = await listAll(imagesRef);
-        const urls = await Promise.all(
-          response.items.map(async (item) => {
-            const url = await getDownloadURL(item);
-            return url;
-          })
-        );
-        setImageUrls(urls);
-      } catch (error) {
-        console.error("Error fetching images:", error);
-      }
-    };
-    fetchImages();
-  });
+    const querySnapshot = getDocs(collection(db, "users"));
+    const loadedImageData = querySnapshot.map((doc) => {
+      id: doc.id, 
+        ...doc.data()
+    });
+  }, []);
 
   return (
     <div>
-      {images.length !== 0 &&
-        imageUrls.map((url, index) => (
-          <img alt="no image found" width={"250px"} src={url} />
-        ))}
+      {imageData.length !== 0 ? (
+        imageData.map((doc) => (
+          <img
+            alt="no image found"
+            width={"250px"}
+            src={doc.url}
+            key={doc.id}
+          />
+        ))
+      ) : (
+        <></>
+      )}
     </div>
   );
 }
