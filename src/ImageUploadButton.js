@@ -7,22 +7,16 @@ const ImageUploadButton = ({ setImages }) => {
   const handleFileChange = (e) => {
     const filesArray = Array.from(e.target.files);
     setImages((files) => [...files, ...filesArray]);
-    filesArray.forEach((file) => {
+    filesArray.forEach(async (file) => {
       try {
         const storageRef = ref(storage, `uploads/${file.name}`);
+        const url = await getDownloadURL(storageRef);
         uploadBytes(storageRef, file);
         setDoc(doc(firestore, "img_data", `${file.name}`), {
           filename: file.name,
           timeUploaded: serverTimestamp(),
-          url: getDownloadURL(storageRef),
+          url: url,
         });
-        db.collection("users")
-          .get()
-          .then((querySnapshot) => {
-            querySnapshot.forEach((doc) => {
-              console.log(`${doc.id} => ${doc.data()}`);
-            });
-          });
       } catch (e) {
         console.error("Error adding document: ", e);
       }

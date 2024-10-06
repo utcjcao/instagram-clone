@@ -1,15 +1,31 @@
 import { React, useState, useEffect } from "react";
 import { storage, firestore } from "./Firebase";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, onSnapshot } from "firebase/firestore";
+import { ref, getDownloadURL } from "firebase/storage";
 
 function ImageDisplay({ images }) {
   const [imageData, setImageData] = useState([]);
   useEffect(() => {
-    const querySnapshot = getDocs(collection(db, "users"));
-    const loadedImageData = querySnapshot.map((doc) => {
-      id: doc.id, 
-        ...doc.data()
-    });
+    const unsubscribe = onSnapshot(
+      collection(firestore, "users"),
+      async (snapshot) => {
+        const loadedImageData = await Promise.all(
+          snapshot.docs.map(async (doc) => {
+            const data = doc.data();
+            const imageRef = ref(storage, `uploads/${data.fileName}`);
+
+            try {
+              const url = await getDownloadURL(imageRef);
+              return { id: doc.id, ...data, url };
+            } catch (error) {
+              return { id: doc.id, ...data, url: null };
+            }
+          })
+        );
+        setImageData(loadedImageData);
+      }
+    );
+    return () => unsubscribe();
   }, []);
 
   return (
