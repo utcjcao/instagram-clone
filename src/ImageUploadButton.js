@@ -10,8 +10,8 @@ const ImageUploadButton = ({ setImages }) => {
     filesArray.forEach(async (file) => {
       try {
         const storageRef = ref(storage, `uploads/${file.name}`);
+        await uploadBytes(storageRef, file);
         const url = await getDownloadURL(storageRef);
-        uploadBytes(storageRef, file);
         setDoc(doc(firestore, "img_data", `${file.name}`), {
           filename: file.name,
           timeUploaded: serverTimestamp(),
