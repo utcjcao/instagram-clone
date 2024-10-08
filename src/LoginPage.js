@@ -1,14 +1,36 @@
 import { React, useState } from "react";
 import { auth } from "./Firebase";
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword } from "firebase/auth";
 
 const LoginPage = () => {
   const [isLoggedIn, setLogin] = useState(false);
-  const auth = getAuth();
-  createUserWithEmailAndPassword(auth, email, password).then((userCredential.user) => {
-    const user = userCredential.user;
-  }) ;
-  return <div>LoginPage</div>;
+  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("");
+
+  function updateInputFields(data) {
+    setEmail(data.email);
+    setPassword(data.password);
+  }
+
+  function userLogin() {
+    createUserWithEmailAndPassword(auth, email, password).then(
+      (userCredential) => {
+        const user = userCredential.user;
+      }
+    );
+  }
+
+  return (
+    <>
+      <form action={updateInputFields}>
+        <input name="email" />
+        <input name="password" />
+        <button onClick={userLogin} type="submit">
+          Search
+        </button>
+      </form>
+    </>
+  );
 };
 
 export default LoginPage;
