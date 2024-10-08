@@ -1,12 +1,11 @@
 import React from "react";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import { storage, firestore } from "./Firebase";
+import { storage, firestore } from "../Firebase";
 import { doc, setDoc, serverTimestamp } from "firebase/firestore";
 
-const ImageUploadButton = ({ setImages }) => {
+const ImageUploadButton = () => {
   const handleFileChange = (e) => {
     const filesArray = Array.from(e.target.files);
-    setImages((files) => [...files, ...filesArray]);
     filesArray.forEach(async (file) => {
       try {
         const storageRef = ref(storage, `uploads/${file.name}`);

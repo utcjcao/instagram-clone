@@ -1,9 +1,9 @@
 import { React, useState, useEffect } from "react";
-import { storage, firestore } from "./Firebase";
+import { storage, firestore } from "../Firebase";
 import { collection, onSnapshot } from "firebase/firestore";
 import { ref, getDownloadURL } from "firebase/storage";
 
-function ImageDisplay({ images }) {
+function ImageDisplay() {
   const [imageData, setImageData] = useState([]);
   useEffect(() => {
     const unsubscribe = onSnapshot(

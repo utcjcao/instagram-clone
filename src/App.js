@@ -1,14 +1,18 @@
 import React, { useState, useEffect } from "react";
-import ImageDisplay from "./ImageDisplay";
-import ImageUploadButton from "./ImageUploadButton";
+import { BrowserRouter } from "react-router-dom";
 
 const App = () => {
-  const [images, setImages] = useState([]);
   return (
-    <>
-      <ImageDisplay images={images}></ImageDisplay>
-      <ImageUploadButton setImages={setImages}></ImageUploadButton>
-    </>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route index element={<Home />} />
+          <Route path="blogs" element={<Blogs />} />
+          <Route path="contact" element={<Contact />} />
+          <Route path="*" element={<NoPage />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
   );
 };
 
