@@ -1,5 +1,5 @@
 import { React, useState } from "react";
-import { auth } from "./Firebase";
+import { auth } from "../Firebase";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 
 const LoginPage = () => {
@@ -26,7 +26,7 @@ const LoginPage = () => {
         <input name="email" />
         <input name="password" />
         <button onClick={userLogin} type="submit">
-          Search
+          Login
         </button>
       </form>
     </>
