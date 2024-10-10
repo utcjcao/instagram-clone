@@ -4,18 +4,20 @@ import ImagePage from "./pages/ImagePage";
 import LoginPage from "./pages/LoginPage";
 import SignUpPage from "./pages/SignUpPage";
 import HomePage from "./pages/HomePage";
+import Layout from "./components/Layout";
 
 const App = () => {
   return (
     <BrowserRouter>
       <div>
         <section>
-          <Routes>
-            <Route path="/" element={<HomePage />} /> {/*todo: add home page*/}
+          <Route path="/" element={<Layout />}>
+            <Route index element={<HomePage />} />
             <Route path="/signup" element={<SignUpPage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/images" element={<ImagePage />} />
-          </Routes>
+            <Route path="*" element={<NotFound />} />
+          </Route>
         </section>
       </div>
     </BrowserRouter>
