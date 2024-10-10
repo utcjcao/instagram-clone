@@ -1,9 +1,33 @@
 instagram clone:
 
-1. button: post photo with caption
+todays going to be a small commit, i just want to write out the flow of info and flow of travel for the user.
 
-2: simple home feed showing posts from followed users: chronological order
+a) first landmark: login
 
-3. like button: don't make individual users yet, just click to like
+user must login/signup before they can access
 
-4. user verfication, storage
+main pages:
+
+- home: infinite scroll of content from followed users
+- feed: 3d grid of images from random users, but suggested to follow your likes
+- profile: shows personal photos
+
+side pages:
+
+- upload page: upload photos
+- notifications: likes, comments, etc
+
+entity: user, photo
+
+each user has their own storage bucket of
+
+- personal photos
+- liked photos
+
+each photo has the following data:
+
+- keywords describing photo(idk how to do this)
+- likes
+  - user id of likers
+- comments
+  - user id of commentors
