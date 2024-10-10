@@ -2,14 +2,21 @@ import React, { useState, useEffect } from "react";
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import ImagePage from "./pages/ImagePage";
 import LoginPage from "./pages/LoginPage";
+import SignUpPage from "./pages/SignUpPage";
 
 const App = () => {
   return (
     <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<LoginPage />}></Route>
-        <Route path="/images" element={<ImagePage />}></Route>
-      </Routes>
+      <div>
+        <section>
+          <Routes>
+            <Route path="/" element={<ImagePage />} /> {/*todo: add home page*/}
+            <Route path="/signup" element={<SignUpPage />} />
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/images" element={<ImagePage />} />
+          </Routes>
+        </section>
+      </div>
     </BrowserRouter>
   );
 };

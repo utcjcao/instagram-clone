@@ -6,7 +6,7 @@ import {
 } from "firebase/auth";
 import { NavLink, useNavigate } from "react-router-dom";
 
-const LoginPage = () => {
+const SignUpPage = () => {
   const [isLoggedIn, setLogin] = useState(false);
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
@@ -16,7 +16,16 @@ const LoginPage = () => {
     setPassword(data.password);
   }
 
-  const userLogin = async (e) => {
+  const userSignUp = async (e) => {
+    e.preventDefault();
+    await createUserWithEmailAndPassword(auth, email, password).then(
+      (userCredential) => {
+        const user = userCredential.user;
+      }
+    );
+  };
+
+  const userSignIn = async (e) => {
     e.preventDefault();
     await signInWithEmailAndPassword(auth, email, password).then(
       (userCredential) => {
@@ -30,12 +39,12 @@ const LoginPage = () => {
       <form action={updateInputFields}>
         <input name="email" />
         <input name="password" />
-        <button onClick={userLogin} type="submit">
-          Login
+        <button onClick={userSignUp} type="submit">
+          Sign Up
         </button>
       </form>
     </>
   );
 };
 
-export default LoginPage;
+export default SignUpPage;
