@@ -7,7 +7,7 @@ import {
 import { NavLink, useNavigate } from "react-router-dom";
 
 const LoginPage = () => {
-  const [isLoggedIn, setLogin] = useState(false);
+  const navigate = useNavigate();
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
 
@@ -21,15 +21,16 @@ const LoginPage = () => {
     await signInWithEmailAndPassword(auth, email, password).then(
       (userCredential) => {
         const user = userCredential.user;
+        navigate("/home");
       }
     );
   };
 
   return (
     <>
-      <form action={updateInputFields}>
-        <input name="email" />
-        <input name="password" />
+      <form>
+        <input name="email" onChange={(e) => setEmail(e.target.value)} />
+        <input name="password" onChange={(e) => setPassword(e.target.value)} />
         <button onClick={userLogin} type="submit">
           Login
         </button>

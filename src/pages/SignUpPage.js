@@ -10,35 +10,23 @@ const SignUpPage = () => {
   const [isLoggedIn, setLogin] = useState(false);
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
-
-  function updateInputFields(data) {
-    setEmail(data.email);
-    setPassword(data.password);
-  }
+  const navigate = useNavigate();
 
   const userSignUp = async (e) => {
     e.preventDefault();
     await createUserWithEmailAndPassword(auth, email, password).then(
       (userCredential) => {
         const user = userCredential.user;
-      }
-    );
-  };
-
-  const userSignIn = async (e) => {
-    e.preventDefault();
-    await signInWithEmailAndPassword(auth, email, password).then(
-      (userCredential) => {
-        const user = userCredential.user;
+        navigate("/login");
       }
     );
   };
 
   return (
     <>
-      <form action={updateInputFields}>
-        <input name="email" />
-        <input name="password" />
+      <form>
+        <input name="email" onChange={(e) => setEmail(e.target.value)} />
+        <input name="password" onChange={(e) => setPassword(e.target.value)} />
         <button onClick={userSignUp} type="submit">
           Sign Up
         </button>
