@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import ImageDisplay from "../components/ImageDisplay";
 import ImageUploadButton from "../components/ImageUploadButton";
 
-const ImagePage = () => {
+const FeedPage = () => {
   return (
     <>
       <ImageDisplay></ImageDisplay>
@@ -11,4 +11,4 @@ const ImagePage = () => {
   );
 };
 
-export default ImagePage;
+export default FeedPage;
