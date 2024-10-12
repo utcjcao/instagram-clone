@@ -11,20 +11,22 @@ import ProfilePage from "./pages/ProfilePage";
 const App = () => {
   return (
     <BrowserRouter>
-      <div>
-        <section>
-          <Routes>
-            <Route path="/" element={<Layout />}>
-              <Route index element={<HomePage />} />
-              <Route path="/signup" element={<SignUpPage />} />
-              <Route path="/login" element={<LoginPage />} />
-              <Route path="/images" element={<FeedPage />} />
-              <Route path="/profile" element={<ProfilePage />} />
-              <Route path="*" element={<NotFoundPage />} />
-            </Route>
-          </Routes>
-        </section>
-      </div>
+      <AuthProvider>
+        <div>
+          <section>
+            <Routes>
+              <Route path="/" element={<Layout />}>
+                <Route index element={<HomePage />} />
+                <Route path="/signup" element={<SignUpPage />} />
+                <Route path="/login" element={<LoginPage />} />
+                <Route path="/images" element={<FeedPage />} />
+                <Route path="/profile" element={<ProfilePage />} />
+                <Route path="*" element={<NotFoundPage />} />
+              </Route>
+            </Routes>
+          </section>
+        </div>
+      </AuthProvider>
     </BrowserRouter>
   );
 };

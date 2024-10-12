@@ -1,20 +1,12 @@
 import { React, useState } from "react";
 import { auth } from "../Firebase";
-import {
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-} from "firebase/auth";
+import { signInWithEmailAndPassword } from "firebase/auth";
 import { NavLink, useNavigate } from "react-router-dom";
 
 const LoginPage = () => {
   const navigate = useNavigate();
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
-
-  function updateInputFields(data) {
-    setEmail(data.email);
-    setPassword(data.password);
-  }
 
   const userLogin = async (e) => {
     e.preventDefault();

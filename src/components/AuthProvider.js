@@ -11,12 +11,16 @@ const AuthProvider = ({ children }) => {
   useEffect(() => {
     const auth = getAuth();
     const user = auth.currentUser;
-    if (user) {
-      //todo here:
-    } else {
-      navigate("/home");
-    }
-  }, []);
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      if (user) {
+        setIsLoggedIn(true);
+        navigate("/home");
+      } else {
+        setIsLoggedIn(false);
+      }
+    });
+    return () => unsubscribe();
+  }, [navigate]);
 
   return (
     <AuthContext.Provider value={{ isLoggedIn, setIsLoggedIn }}>
