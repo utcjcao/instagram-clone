@@ -1,18 +1,21 @@
-import { React, useState } from "react";
+import { React, useState, useContext } from "react";
 import { auth } from "../Firebase";
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import { NavLink, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../components/AuthProvider";
 
 const SignUpPage = () => {
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   const navigate = useNavigate();
+  const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext);
 
   const userSignUp = async (e) => {
     e.preventDefault();
     await createUserWithEmailAndPassword(auth, email, password).then(
       (userCredential) => {
         const user = userCredential.user;
+        setIsLoggedIn(true);
         navigate("/login");
       }
     );

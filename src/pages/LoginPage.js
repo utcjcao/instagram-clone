@@ -1,21 +1,31 @@
-import { React, useState } from "react";
+import { React, useState, useContext } from "react";
 import { auth } from "../Firebase";
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { NavLink, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../components/AuthProvider";
 
 const LoginPage = () => {
   const navigate = useNavigate();
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
+  const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext);
 
   const userLogin = async (e) => {
     e.preventDefault();
-    await signInWithEmailAndPassword(auth, email, password).then(
-      (userCredential) => {
-        const user = userCredential.user;
-        navigate("/home");
-      }
-    );
+    try {
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      const user = userCredential.user;
+      setIsLoggedIn(true);
+      navigate("/home");
+    } catch (error) {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      console.error("Sign-in failed:", errorCode, errorMessage);
+    }
   };
 
   return (
