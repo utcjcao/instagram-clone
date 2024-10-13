@@ -17,7 +17,7 @@ const ImageUploadButton = () => {
           url: url,
         });
       } catch (e) {
-        console.error("Error adding document: ", e);
+        console.error("Error adding img: ", e);
       }
     });
   };

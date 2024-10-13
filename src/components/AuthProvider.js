@@ -6,6 +6,7 @@ const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userEmail, setUserEmail] = useState(null);
   const navigate = useNavigate();
   // checks if user is logged in
   useEffect(() => {
@@ -15,15 +16,17 @@ const AuthProvider = ({ children }) => {
       if (user) {
         setIsLoggedIn(true);
         navigate("/home");
+        setUserEmail(user.email);
       } else {
         setIsLoggedIn(false);
+        navigate("/login");
       }
     });
     return () => unsubscribe();
   }, [navigate]);
 
   return (
-    <AuthContext.Provider value={{ isLoggedIn, setIsLoggedIn }}>
+    <AuthContext.Provider value={{ isLoggedIn, setIsLoggedIn, userEmail }}>
       {children}
     </AuthContext.Provider>
   );
