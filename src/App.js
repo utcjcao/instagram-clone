@@ -7,6 +7,7 @@ import HomePage from "./pages/HomePage";
 import Layout from "./components/Layout";
 import NotFoundPage from "./pages/NotFoundPage";
 import ProfilePage from "./pages/ProfilePage";
+import { AuthProvider, AuthContext } from "./components/AuthProvider";
 
 const App = () => {
   return (

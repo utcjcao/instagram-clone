@@ -3,6 +3,7 @@ import { signOut } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { AuthContext } from "../components/AuthProvider";
+import { auth } from "../Firebase";
 
 const LogOutButton = () => {
   const { setIsLoggedIn } = useContext(AuthContext);
