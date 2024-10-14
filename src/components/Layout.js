@@ -1,7 +1,9 @@
-import React from "react";
+import { React, useContext } from "react";
 import { Outlet } from "react-router-dom";
+import AuthProvider from "./AuthProvider";
 
 const Layout = () => {
+  const { isLoggedIn } = useContext(AuthContext);
   return (
     <div>
       <header>
@@ -21,9 +23,7 @@ const Layout = () => {
         </nav>
       </header>
 
-      <main>
-        <Outlet />
-      </main>
+      <main>{isLoggedIn ? <Outlet /> : <span>not logged in</span>}</main>
 
       <footer>
         <p>footer for now</p>
