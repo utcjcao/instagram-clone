@@ -11,13 +11,18 @@ const Layout = () => {
         <nav>
           <ul>
             <li>
-              <a href="/">Home</a>
+              <a href="/home">Home</a>
             </li>
             <li>
-              <a href="/explore">Explore</a>
+              <a href="/images">Explore</a>
             </li>
             <li>
               <a href="/profile">Profile</a>
+            </li>
+            <li>
+              <a href="/login">
+                {isLoggedIn ? <span>logout</span> : <span>login</span>}
+              </a>
             </li>
           </ul>
         </nav>
