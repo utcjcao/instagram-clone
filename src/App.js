@@ -4,7 +4,7 @@ import FeedPage from "./pages/FeedPage";
 import LoginPage from "./pages/LoginPage";
 import SignUpPage from "./pages/SignUpPage";
 import HomePage from "./pages/HomePage";
-import Layout from "./components/Layout";
+import Layout from "./layouts/Layout";
 import NotFoundPage from "./pages/NotFoundPage";
 import ProfilePage from "./pages/ProfilePage";
 import { AuthProvider, AuthContext } from "./components/AuthProvider";
@@ -16,7 +16,7 @@ const App = () => {
         <div>
           <section>
             <Routes>
-              <Route path="/home" element={<Layout />}>
+              <Route path="/" element={<Layout />}>
                 <Route index element={<HomePage />} />
                 <Route path="/signup" element={<SignUpPage />} />
                 <Route path="/login" element={<LoginPage />} />
