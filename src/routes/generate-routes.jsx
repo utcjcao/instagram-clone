@@ -17,7 +17,6 @@ export const renderRoutes = (mainRoutes) => {
   const Routes = ({ isAuthorized }) => {
     const layouts = mainRoutes.map(({ layout: Layout, routes }, index) => {
       const subRoutes = generateFlattenRoutes(routes);
-
       return (
         <Route key={index} element={<Layout />}>
           <Route
@@ -39,5 +38,3 @@ export const renderRoutes = (mainRoutes) => {
   };
   return Routes;
 };
-
-export const Routes = renderRoutes(routes);

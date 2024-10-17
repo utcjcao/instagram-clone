@@ -6,12 +6,10 @@ import MainLayout from "../layouts/MainLayout";
 import SignUpPage from "../pages/SignUpPage";
 import LoginPage from "../pages/LoginPage";
 import HomePage from "../pages/HomePage";
-import FeedPage from "./pages/FeedPage";
-import LoginPage from "./pages/LoginPage";
-import SignUpPage from "./pages/SignUpPage";
-import HomePage from "./pages/HomePage";
-import NotFoundPage from "./pages/NotFoundPage";
-import ProfilePage from "./pages/ProfilePage";
+import FeedPage from "../pages/FeedPage";
+import NotFoundPage from "../pages/NotFoundPage";
+import ProfilePage from "../pages/ProfilePage";
+import { renderRoutes } from "./generate-routes";
 
 export const routes = [
   {
@@ -29,6 +27,13 @@ export const routes = [
         title: "Signup page",
         component: SignUpPage,
         path: "/signup",
+        isPublic: true,
+      },
+      {
+        name: "404 not found",
+        title: "404 not found",
+        component: NotFoundPage,
+        path: "/404",
         isPublic: true,
       },
     ],
@@ -57,3 +62,5 @@ export const routes = [
     ],
   },
 ];
+
+export const Routes = renderRoutes(routes);

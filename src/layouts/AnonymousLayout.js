@@ -28,7 +28,9 @@ const Layout = () => {
         </nav>
       </header>
 
-      <main>{isLoggedIn ? <Outlet /> : <span>not logged in</span>}</main>
+      <main>
+        <Outlet />
+      </main>
 
       <footer>
         <p>footer for now</p>
