@@ -6,6 +6,12 @@ import MainLayout from "../layouts/MainLayout";
 import SignUpPage from "../pages/SignUpPage";
 import LoginPage from "../pages/LoginPage";
 import HomePage from "../pages/HomePage";
+import FeedPage from "./pages/FeedPage";
+import LoginPage from "./pages/LoginPage";
+import SignUpPage from "./pages/SignUpPage";
+import HomePage from "./pages/HomePage";
+import NotFoundPage from "./pages/NotFoundPage";
+import ProfilePage from "./pages/ProfilePage";
 
 export const routes = [
   {
@@ -35,6 +41,18 @@ export const routes = [
         title: "Home page",
         component: HomePage,
         path: "/home",
+      },
+      {
+        name: "profile",
+        title: "profile page",
+        component: ProfilePage,
+        path: "/profile",
+      },
+      {
+        name: "feed",
+        title: "feed page",
+        component: FeedPage,
+        path: "/feed",
       },
     ],
   },

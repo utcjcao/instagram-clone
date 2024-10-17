@@ -39,3 +39,5 @@ export const renderRoutes = (mainRoutes) => {
   };
   return Routes;
 };
+
+export const Routes = renderRoutes(routes);
