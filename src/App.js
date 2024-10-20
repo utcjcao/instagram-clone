@@ -10,7 +10,6 @@ import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
 import NotFoundPage from "./pages/NotFoundPage";
 import ProfilePage from "./pages/ProfilePage";
-import SignUpPage from "./pages/SignUpPage";
 import ProtectedRoute from "./Routes/ProtectedRoute";
 
 const App = () => {
