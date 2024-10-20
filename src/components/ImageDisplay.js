@@ -12,7 +12,10 @@ function ImageDisplay() {
         const loadedImageData = await Promise.all(
           snapshot.docs.map(async (doc) => {
             const data = doc.data();
-            const imageRef = ref(storage, `uploads/${data.filename}`);
+            const imageRef = ref(
+              storage,
+              `uploads/${data.uid}/${data.filename}`
+            );
 
             try {
               const url = await getDownloadURL(imageRef);
