@@ -24,6 +24,7 @@ function ImageDisplay() {
             } catch (error) {
               return { id: doc.id, ...data, url: null };
               console.log("error loading images");
+              // todo
             }
           })
         );
