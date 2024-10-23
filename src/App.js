@@ -18,7 +18,6 @@ const App = () => {
       <Routes>
         <Route element={<AnonymousLayout />}>
           <Route path="/login" element={<LoginPage />}></Route>
-          <Route path="/signup" element={<SignUpPage />}></Route>
           <Route path="*" element={<NotFoundPage />} />
         </Route>
         <Route element={<MainLayout />}>

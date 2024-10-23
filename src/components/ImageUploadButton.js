@@ -1,4 +1,4 @@
-import React from "react";
+import { React, useContext } from "react";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { storage, firestore } from "../Firebase";
 import { doc, setDoc, serverTimestamp } from "firebase/firestore";
