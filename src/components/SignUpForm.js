@@ -11,6 +11,7 @@ const SignUpForm = () => {
   const navigate = useNavigate();
   const passwordRef = useRef();
   const [error, setError] = useState("");
+
   const userSignUp = async (e) => {
     e.preventDefault();
     if (passwordRef.current.value.length < 6) {
@@ -29,11 +30,17 @@ const SignUpForm = () => {
   return (
     <>
       <form>
-        <input name="email" onChange={(e) => setEmail(e.target.value)} />
+        <input
+          name="email"
+          onChange={(e) => setEmail(e.target.value)}
+          required
+        />
         <input
           name="password"
+          type="password"
           onChange={(e) => setPassword(e.target.value)}
           ref={passwordRef}
+          required
         />
         <button onClick={userSignUp} type="submit">
           Sign Up

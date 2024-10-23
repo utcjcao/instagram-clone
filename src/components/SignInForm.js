@@ -3,7 +3,7 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import { auth } from "../Firebase";
 
-const LoginForm = () => {
+const SignInForm = () => {
   const navigate = useNavigate();
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
@@ -20,8 +20,12 @@ const LoginForm = () => {
   };
   return (
     <form>
-      <input name="email" onChange={(e) => setEmail(e.target.value)} />
-      <input name="password" onChange={(e) => setPassword(e.target.value)} />
+      <input name="email" onChange={(e) => setEmail(e.target.value)} required />
+      <input
+        name="password"
+        onChange={(e) => setPassword(e.target.value)}
+        required
+      />
       <button onClick={userLogin} type="submit">
         Login
       </button>
@@ -29,4 +33,4 @@ const LoginForm = () => {
   );
 };
 
-export default LoginForm;
+export default SignInForm;
