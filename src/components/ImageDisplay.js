@@ -14,7 +14,7 @@ function ImageDisplay() {
             const data = doc.data();
             const imageRef = ref(
               storage,
-              `uploads/${data.uid}/${data.filename}`
+              `uploads/${data.user_id}/${data.imageId}`
             );
 
             try {
@@ -24,7 +24,6 @@ function ImageDisplay() {
             } catch (error) {
               return { id: doc.id, ...data, url: null };
               console.log("error loading images");
-              // todo
             }
           })
         );

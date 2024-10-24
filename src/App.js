@@ -22,18 +22,10 @@ const App = () => {
         </Route>
         <Route element={<MainLayout />}>
           <Route
-            path="/"
+            path="/home"
             element={
               <ProtectedRoute>
                 <HomePage />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/feed"
-            element={
-              <ProtectedRoute>
-                <FeedPage />
               </ProtectedRoute>
             }
           />
