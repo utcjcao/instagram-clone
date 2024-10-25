@@ -9,7 +9,6 @@ const AuthProvider = ({ children }) => {
   // checks if user is logged in
   useEffect(() => {
     const auth = getAuth();
-    const user = auth.currentUser;
     const unsubscribe = auth.onAuthStateChanged((user) => {
       if (user) {
         setIsLoggedIn(true);
