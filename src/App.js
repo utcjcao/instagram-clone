@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { AuthProvider, AuthContext } from "./components/AuthProvider";
 import { Router, Routes, Route, BrowserRouter } from "react-router-dom";
 
 import AnonymousLayout from "./layouts/AnonymousLayout";
@@ -14,40 +13,38 @@ import ProtectedRoute from "./Routes/ProtectedRoute";
 
 const App = () => {
   return (
-    <AuthProvider>
-      <Routes>
-        <Route element={<AnonymousLayout />}>
-          <Route path="/login" element={<LoginPage />}></Route>
-          <Route path="*" element={<NotFoundPage />} />
-        </Route>
-        <Route element={<MainLayout />}>
-          <Route
-            path="/home"
-            element={
-              <ProtectedRoute>
-                <HomePage />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/feed"
-            element={
-              <ProtectedRoute>
-                <FeedPage />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/profile"
-            element={
-              <ProtectedRoute>
-                <ProfilePage />
-              </ProtectedRoute>
-            }
-          />
-        </Route>
-      </Routes>
-    </AuthProvider>
+    <Routes>
+      <Route element={<AnonymousLayout />}>
+        <Route path="/login" element={<LoginPage />}></Route>
+        <Route path="*" element={<NotFoundPage />} />
+      </Route>
+      <Route element={<MainLayout />}>
+        <Route
+          path="/home"
+          element={
+            <ProtectedRoute>
+              <HomePage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/feed"
+          element={
+            <ProtectedRoute>
+              <FeedPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/profile"
+          element={
+            <ProtectedRoute>
+              <ProfilePage />
+            </ProtectedRoute>
+          }
+        />
+      </Route>
+    </Routes>
   );
 };
 

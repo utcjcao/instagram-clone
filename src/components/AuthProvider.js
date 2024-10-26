@@ -1,5 +1,9 @@
 import React, { createContext, useState, useContext, useEffect } from "react";
-import { getAuth } from "firebase/auth";
+import {
+  getAuth,
+  setPersistence,
+  browserLocalPersistence,
+} from "firebase/auth";
 
 const AuthContext = createContext();
 
@@ -9,16 +13,18 @@ const AuthProvider = ({ children }) => {
   // checks if user is logged in
   useEffect(() => {
     const auth = getAuth();
-    const unsubscribe = auth.onAuthStateChanged((user) => {
-      if (user) {
-        setIsLoggedIn(true);
-        setUserEmail(user.email);
-      } else {
-        setIsLoggedIn(false);
-      }
+    setPersistence(auth, browserLocalPersistence).then(() => {
+      const unsubscribe = auth.onAuthStateChanged((user) => {
+        if (user) {
+          setIsLoggedIn(true);
+          setUserEmail(user.email);
+        } else {
+          setIsLoggedIn(false);
+        }
+      }, []);
+      return () => unsubscribe();
     });
-    return () => unsubscribe();
-  });
+  }, []);
 
   return (
     <AuthContext.Provider value={{ isLoggedIn, setIsLoggedIn, userEmail }}>

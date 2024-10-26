@@ -1,14 +1,20 @@
 import { React, useContext } from "react";
 import { AuthProvider, AuthContext } from "../components/AuthProvider";
 import { Outlet } from "react-router-dom";
+import { auth } from "../Firebase";
 
 const Layout = () => {
-  const { isLoggedIn } = useContext(AuthContext);
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      
+      const uid = user.uid;
+      // ...
+    } else {
+      
+    }
+  });
   return (
-    <div>
-      <span>ur not logged in dingus</span>
-      <Outlet />
-    </div>
+    {user ? <Outlet> : <span>ur not logged in dingus</span>}
   );
 };
 
