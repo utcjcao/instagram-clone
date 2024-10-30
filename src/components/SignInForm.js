@@ -12,8 +12,7 @@ const SignInForm = () => {
   const userLogin = async (e) => {
     e.preventDefault();
     try {
-      await signInWithEmailAndPassword(auth, email, password);
-      setIsLoggedIn(true);
+      await setIsLoggedIn(true);
       navigate("/home");
     } catch (error) {
       const errorCode = error.code;
