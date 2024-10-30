@@ -4,19 +4,23 @@ import {
   serverTimestamp,
   arrayRemove,
 } from "firebase/firestore";
-import { storage, firestore, auth } from "../../Firebase";
+import { firestore } from "../../Firebase";
+import User from "../entities/User";
 
 export class UserRepository {
   getUserProfile(user_id) {
     return getDoc(doc(firestore, "users", user_id));
   }
-  createUserProfile(email, profile_picture, bio) {
+  createUserProfile(username, email, bio, profile_picture) {
+    newUser = new User({
+      username,
+      email,
+      bio,
+      profile_picture,
+    });
+
     setDoc(doc(firestore, "users", `${email}`), {
-      email: email,
-      bio: bio,
-      profile_picture: profile_picture,
-      caption: caption,
-      followers: [],
+      newUser,
     });
   }
 }
