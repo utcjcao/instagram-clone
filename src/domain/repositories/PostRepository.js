@@ -88,7 +88,7 @@ export class PostRepository {
   }
   deletePost(user_id, img_id) {
     const storageRef = ref(storage, `uploads/${user_id}/${img_id}`);
-    deleteObject(desertRef)
+    deleteObject(storageRef)
       .then(() => {})
       .catch((error) => {});
     deleteDoc(doc(firestore, "img_data", `${img_id}`));

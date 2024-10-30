@@ -67,7 +67,7 @@ export class NotificationRepository {
       await deleteDoc(doc(firestore, "notifications", notificationId));
     } catch (e) {
       console.error("Error deleting notification: ", e);
-      throw e; // Re-throw the error after logging
+      throw e;
     }
   }
 }
