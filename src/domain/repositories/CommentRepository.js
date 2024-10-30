@@ -3,25 +3,51 @@ import { firestore } from "../../Firebase";
 import { Comment } from "./Comment";
 
 export class CommentRepository {
-  async likeComment(commentId, userId) {
+  async likeComment(img_id, comment_id, user_id) {
     try {
-      const commentRef = doc(firestore, "comments", `${commentId}`);
-      await updateDoc(commentRef, {
-        likes: arrayUnion(userId),
-      });
+      const postRef = doc(firestore, "img_data", `${img_id}`);
+      const postDoc = await getDoc(postRef);
+      const comments = postDoc.data().comments;
+
+      const commentIndex = comments.findIndex(
+        (comment) => comment.comment_id === comment_id
+      );
+
+      if (commentIndex !== -1) {
+        const commentToUpdate = comments[commentIndex];
+        commentToUpdate.likeComment(user_id);
+        await updateDoc(postRef, {
+          [`comments.${commentIndex}.likes`]: arrayUnion(user_id),
+        });
+      } else {
+        console.error("Comment not found");
+      }
     } catch (e) {
       console.error("Error liking comment: ", e);
     }
   }
 
-  async unlikeComment(commentId, userId) {
+  async unlikeComment(img_id, comment_id, user_id) {
     try {
-      const commentRef = doc(firestore, "comments", `${commentId}`);
-      await updateDoc(commentRef, {
-        likes: arrayRemove(userId),
-      });
+      const postRef = doc(firestore, "img_data", `${img_id}`);
+      const postDoc = await getDoc(postRef);
+      const comments = postDoc.data().comments;
+
+      const commentIndex = comments.findIndex(
+        (comment) => comment.comment_id === comment_id
+      );
+
+      if (commentIndex !== -1) {
+        const commentToUpdate = comments[commentIndex];
+        commentToUpdate.unlikeComment(user_id);
+        await updateDoc(postRef, {
+          [`comments.${commentIndex}.likes`]: arrayRemove(user_id),
+        });
+      } else {
+        console.error("Comment not found");
+      }
     } catch (e) {
-      console.error("Error unliking comment: ", e);
+      console.error("Error liking comment: ", e);
     }
   }
 }

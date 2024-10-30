@@ -9,20 +9,23 @@ import { storage, firestore, auth } from "../../Firebase";
 export class PostRepository {
   async uploadPost(file, caption, user_id) {
     try {
-      const imageId = uuidv4();
-      const storageRef = ref(storage, `uploads/${user_id}/${imageId}`);
+      const img_id = uuidv4();
+      const storageRef = ref(storage, `uploads/${user_id}/${img_id}`);
       await uploadBytes(storageRef, file);
       const url = await getDownloadURL(storageRef);
-      setDoc(doc(firestore, "img_data", `${imageId}`), {
+
+      const newPost = new Post({
         filename: file.name,
         timeUploaded: serverTimestamp(),
         url: url,
         user_id: user_id,
-        img_id: imageId,
+        img_id: img_id,
         caption: caption,
         likes: [],
         comments: [],
       });
+
+      setDoc(doc(firestore, "img_data", `${img_id}`), { ...newPost });
     } catch (e) {
       console.error("Error adding img: ", e);
     }
@@ -33,7 +36,7 @@ export class PostRepository {
         snapshot.docs.map(async (doc) => {
           const data = doc.data();
           if (data.user_id == user_id) {
-            const imageRef = ref(storage, `uploads/${user_id}/${data.imageId}`);
+            const imageRef = ref(storage, `uploads/${user_id}/${data.img_id}`);
 
             try {
               const url = await getDownloadURL(imageRef);
@@ -57,7 +60,7 @@ export class PostRepository {
 
           const imageRef = ref(
             storage,
-            `uploads/${data.user_id}/${data.imageId}`
+            `uploads/${data.user_id}/${data.img_id}`
           );
 
           try {
@@ -116,13 +119,15 @@ export class PostRepository {
   async commentPost(img_id, user_id, comment_txt) {
     try {
       const updateRef = doc(firestore, "img_data", `${img_id}`);
-      const comment = {
+      const newComment = new Comment({
+        comment_id: uuidv4(),
         user_id: user_id,
         comment_txt: comment_txt,
         timestamp: serverTimestamp(),
-      };
+      });
+
       await updateDoc(updateRef, {
-        comments: arrayUnion(comment),
+        comments: arrayUnion(newComment),
       });
     } catch (e) {
       console.error("Error commenting post: ", e);
