@@ -1,3 +1,9 @@
+import {
+  updateDoc,
+  arrayUnion,
+  serverTimestamp,
+  arrayRemove,
+} from "firebase/firestore";
 import { storage, firestore, auth } from "../../Firebase";
 
 export class PostRepository {
@@ -65,12 +71,61 @@ export class PostRepository {
       callback(loadedImageData);
     });
   }
-  updatePost() {}
+  async updatePost(file, caption, user_id, img_id) {
+    try {
+      const storageRef = ref(storage, `uploads/${user_id}/${img_id}`);
+      const updateRef = doc(firestore, "img_data", `${img_id}`);
+
+      await deleteObject(storageRef);
+      await uploadBytes(storageRef, file);
+
+      await updateDoc(updateRef, {
+        caption: caption,
+      });
+    } catch (e) {
+      console.error("Error updating post: ", e);
+    }
+  }
   deletePost(user_id, img_id) {
     const storageRef = ref(storage, `uploads/${user_id}/${img_id}`);
     deleteObject(desertRef)
       .then(() => {})
       .catch((error) => {});
     deleteDoc(doc(firestore, "img_data", `${img_id}`));
+  }
+  async likePost(img_id, user_id) {
+    try {
+      const updateRef = doc(firestore, "img_data", `${img_id}`);
+      await updateDoc(updateRef, {
+        likes: arrayUnion(user_id),
+      });
+    } catch (e) {
+      console.error("Error liking post: ", e);
+    }
+  }
+  async unlikePost(img_id, user_id) {
+    try {
+      const updateRef = doc(firestore, "img_data", `${img_id}`);
+      await updateDoc(updateRef, {
+        likes: arrayRemove(user_id),
+      });
+    } catch (e) {
+      console.error("Error liking post: ", e);
+    }
+  }
+  async commentPost(img_id, user_id, comment_txt) {
+    try {
+      const updateRef = doc(firestore, "img_data", `${img_id}`);
+      const comment = {
+        user_id: user_id,
+        comment_txt: comment_txt,
+        timestamp: serverTimestamp(),
+      };
+      await updateDoc(updateRef, {
+        comments: arrayUnion(comment),
+      });
+    } catch (e) {
+      console.error("Error commenting post: ", e);
+    }
   }
 }
