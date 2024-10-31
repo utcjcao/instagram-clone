@@ -4,14 +4,24 @@ import {
   serverTimestamp,
   arrayRemove,
 } from "firebase/firestore";
-import { firestore } from "../../Firebase";
+import { auth, firestore } from "../../Firebase";
 import User from "../entities/User";
 
 export class UserRepository {
-  getUserProfile(user_id) {
-    return getDoc(doc(firestore, "users", user_id));
+  async getUserProfile(user_id) {
+    try {
+      const doc = await getDoc(doc(firestore, "users", user_id));
+      if (doc.exists()) {
+        return doc;
+      } else {
+        throw new Error("no such user!");
+      }
+    } catch (error) {
+      throw error;
+    }
   }
-  createUserProfile(username, email, bio, profile_picture) {
+
+  async createUserProfile(username, email, bio, profile_picture) {
     newUser = new User({
       username,
       email,
@@ -19,8 +29,29 @@ export class UserRepository {
       profile_picture,
     });
 
-    setDoc(doc(firestore, "users", `${email}`), {
+    await setDoc(doc(firestore, "users", `${email}`), {
       newUser,
     });
+  }
+  async getCurrentUserProfile() {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        return user;
+      } else {
+        return null;
+      }
+    });
+  }
+  async getUserFollowers(user_id) {
+    try {
+      const doc = await getDoc(doc(firestore, "users", user_id));
+      if (doc.exists()) {
+        return doc.data().followers;
+      } else {
+        throw new Error("no such user!");
+      }
+    } catch (error) {
+      throw error;
+    }
   }
 }

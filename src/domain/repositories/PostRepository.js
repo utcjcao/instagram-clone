@@ -74,21 +74,6 @@ export class PostRepository {
       callback(loadedImageData);
     });
   }
-  async updatePost(file, caption, user_id, img_id) {
-    try {
-      const storageRef = ref(storage, `uploads/${user_id}/${img_id}`);
-      const updateRef = doc(firestore, "img_data", `${img_id}`);
-
-      await deleteObject(storageRef);
-      await uploadBytes(storageRef, file);
-
-      await updateDoc(updateRef, {
-        caption: caption,
-      });
-    } catch (e) {
-      console.error("Error updating post: ", e);
-    }
-  }
   deletePost(user_id, img_id) {
     const storageRef = ref(storage, `uploads/${user_id}/${img_id}`);
     deleteObject(storageRef)
