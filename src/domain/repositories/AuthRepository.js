@@ -1,22 +1,58 @@
 import { storage, firestore, auth } from "../../Firebase";
+import {
+  signInWithEmailAndPassword,
+  signOut,
+  createUserWithEmailAndPassword,
+  onAuthStateChanged,
+} from "firebase/auth";
 
 export class AuthRepository {
-  signIn(email, password) {
-    signInWithEmailAndPassword(auth, email, password);
+  async signIn(email, password) {
+    try {
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      return userCredential.user;
+    } catch (error) {
+      console.error("Error signing in:", error);
+      throw error;
+    }
   }
-  signOut() {
-    signOut(auth);
+
+  async signOut() {
+    try {
+      await signOut(auth);
+    } catch (error) {
+      console.error("Error signing out:", error);
+      throw error;
+    }
   }
-  signUp(email, password) {
-    createUserWithEmailAndPassword(auth, email, password);
+
+  async signUp(email, password) {
+    try {
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      return userCredential.user;
+    } catch (error) {
+      console.error("Error signing up:", error);
+      throw error;
+    }
   }
+
   fetchUser() {
     return auth.currentUser;
   }
+
   isLoggedIn() {
     return auth.currentUser !== null;
   }
+
   onAuthStateChanged(callback) {
-    return auth.onAuthStateChanged(callback);
+    return onAuthStateChanged(auth, callback);
   }
 }
