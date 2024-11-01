@@ -1,4 +1,4 @@
-import { storage, firestore, auth } from "../../Firebase";
+import { storage, firestore, auth } from "../../Firebase.js";
 import {
   signInWithEmailAndPassword,
   signOut,

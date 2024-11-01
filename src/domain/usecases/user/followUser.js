@@ -1,19 +1,19 @@
-import { FollowRequestRepository } from "../../repositories/FollowRequestRepository";
+import { UserRepository } from "../../repositories/UserRepository";
 
-export default function fetchUserFollowers() {
+export default function followUser(follower_id, followed_id) {
   // repo here
   const userRepository = new UserRepository();
 
   return async function execute() {
     try {
-      // pre check for input validation, or if its already happened, etc
-      const followers = await userRepository.getUserFollowers();
-      if (!followers) {
-        throw new Error("no followers");
+      const follower_user = userRepository.findUserProfile(follower_id);
+      const followed_user = userRepository.findUserProfile(followed_id);
+      if (!follower_user || !followed_user) {
+        throw new Error("ids not valid!");
       }
-      return followers;
+      userRepository.followUser(follower_id, followed_id);
     } catch (error) {
-      console.error("Failed to fetch current user followers:", error);
+      console.error("Failed to follow user:", error);
       throw error;
     }
 

@@ -6,6 +6,7 @@ export class User {
     profilePicture,
     followers = [],
     following = [],
+    isPrivate = false,
   }) {
     this.username = username;
     this.email = email;
@@ -13,6 +14,7 @@ export class User {
     this.profilePicture = profilePicture;
     this.followers = followers;
     this.following = following;
+    this.isPrivate = isPrivate;
   }
   addFollower(follower_id) {
     this.followers.push(follower_id);
@@ -34,5 +36,8 @@ export class User {
   }
   unfollowUser(follower_id) {
     this.following.filter((id) => id !== follower_id);
+  }
+  setPrivacy(privacy) {
+    this.isPrivate = privacy;
   }
 }
