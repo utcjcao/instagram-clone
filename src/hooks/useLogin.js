@@ -1,9 +1,12 @@
 import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
-import { auth } from "../Firebase";
+import { auth, firestore } from "../Firebase";
+import { doc, getDoc } from "firebase/firestore";
+import useAuthStore from "../store/authStore";
 
 const useLogin = () => {
   const [signInWithEmailAndPassword, loading, error] =
     useSignInWithEmailAndPassword(auth);
+  const loginUser = useAuthStore((state) => state.login);
   const login = async (inputs) => {
     if (!inputs.email || !inputs.password) {
       console.log("new error");
@@ -14,7 +17,16 @@ const useLogin = () => {
         inputs.password
       );
       if (userCredentials) {
+        const docRef = doc(firestore, "users", userCred.user.uid);
+        const docSnap = await getDoc(docRef);
+        localStorage.setItem("userInfo", JSON.stringify(docSnap.data()));
+        loginUser(docSnap.data());
       }
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    }
   };
+  return { loading, error, login };
 };
+
+export default useLogin;
