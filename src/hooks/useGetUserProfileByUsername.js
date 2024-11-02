@@ -2,6 +2,7 @@ import { firestore } from "../Firebase";
 import useShowToast from "./useShowToast";
 import { useState } from "react";
 import useProfileStore from "../storage/profileStore";
+import { collection, doc, getDocs, where } from "firebase/firestore";
 
 const useGetUserProfileByUsername = (username) => {
   const [isLoading, setIsLoading] = useState(true);
