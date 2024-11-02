@@ -1,10 +1,11 @@
 import { firestore } from "../Firebase";
 import useShowToast from "./useShowToast";
 import { useState } from "react";
+import useProfileStore from "../storage/profileStore";
 
 const useGetUserProfileByUsername = (username) => {
   const [isLoading, setIsLoading] = useState(true);
-  const [userProfile, setUserProfile] = useState(null);
+  const { userProfile, setUserProfile } = useProfileStore();
 
   const showToast = useShowToast();
 
