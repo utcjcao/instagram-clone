@@ -4,6 +4,7 @@ import { useLocation } from "react-router-dom";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { storage, firestore, auth } from "../Firebase";
 import SideBar from "../components/SideBar/SideBar";
+import ToastProvider from "../components/ToastContext";
 
 const MainLayout = () => {
   const path = useLocation();
@@ -13,8 +14,10 @@ const MainLayout = () => {
   if (isPageLoading) return <>loading</>;
   return (
     <div>
-      {loadSideBar ? <SideBar></SideBar> : null}
-      <Outlet />
+      <ToastProvider>
+        {loadSideBar ? <SideBar></SideBar> : null}
+        <Outlet />
+      </ToastProvider>
     </div>
   );
 };
