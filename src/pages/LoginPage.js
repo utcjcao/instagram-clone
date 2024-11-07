@@ -1,8 +1,7 @@
 import { React, useState, useContext } from "react";
-import AuthForm from "../components/AuthForm/AuthForm";
 
 const LoginPage = () => {
-  return <AuthForm></AuthForm>;
+  return <>yo</>;
 };
 
 export default LoginPage;
