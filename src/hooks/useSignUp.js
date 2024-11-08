@@ -1,6 +1,14 @@
 import { useCreateUserWithEmailAndPassword } from "react-firebase-hooks/auth";
 import { auth, firestore } from "../Firebase";
-import { doc, getDoc, setDoc } from "firebase/firestore";
+import {
+  doc,
+  getDoc,
+  setDoc,
+  collection,
+  getDocs,
+  query,
+  where,
+} from "firebase/firestore";
 import useAuthStore from "../storage/authStore";
 import useShowToast from "./useShowToast";
 
