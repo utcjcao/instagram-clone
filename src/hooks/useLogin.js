@@ -26,7 +26,7 @@ const useLogin = () => {
         loginUser(docSnap.data());
       }
     } catch (error) {
-      showToast("Error", "Please fill all the fields", "error");
+      showToast("Error", "Please fill all the fields", error);
       return;
     }
   };
