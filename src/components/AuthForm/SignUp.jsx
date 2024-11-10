@@ -1,5 +1,14 @@
 import { useState } from "react";
 import useSignUp from "../../hooks/useSignUp";
+import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
+import {
+  Alert,
+  AlertIcon,
+  Button,
+  Input,
+  InputGroup,
+  InputRightElement,
+} from "@chakra-ui/react";
 
 const SignUp = () => {
   const [inputs, setInputs] = useState({
@@ -8,33 +17,71 @@ const SignUp = () => {
     email: "",
     password: "",
   });
-  const { loading, error, SignIn } = useSignUp();
+  const [showPassword, setShowPassword] = useState(false);
+  const { loading, error, signUp } = useSignUp();
   return (
-    <form action={() => SignIn(inputs)}>
-      <input
-        name="email"
+    <>
+      <Input
+        fontSize={14}
+        size={"sm"}
+        value={inputs.email}
         type="email"
+        placeholder="Enter email"
         onChange={(e) => setInputs({ ...inputs, email: e.target.value })}
       />
-      <input
-        type="Username"
-        name="Username"
-        onChange={(e) => setInputs({ ...inputs, Username: e.target.value })}
-      />
-      <input
-        name="fullName"
-        type="fullName"
+      <Input
+        fontSize={14}
+        size={"sm"}
+        value={inputs.email}
+        type="name"
+        placeholder="Enter full name"
         onChange={(e) => setInputs({ ...inputs, fullName: e.target.value })}
       />
-      <input
-        type="password"
-        name="password"
-        onChange={(e) => setInputs({ ...inputs, password: e.target.value })}
+      <Input
+        fontSize={14}
+        size={"sm"}
+        value={inputs.email}
+        type="username"
+        placeholder="Enter username"
+        onChange={(e) => setInputs({ ...inputs, username: e.target.value })}
       />
-      <button disabled={loading} type="submit">
-        Sign Up
-      </button>
-    </form>
+      <InputGroup>
+        <Input
+          onChange={(e) => setInputs({ ...inputs, password: e.target.value })}
+          fontSize={14}
+          size={"sm"}
+          value={inputs.password}
+          type={showPassword ? "text" : "password"}
+          placeholder="Enter password"
+        />
+        <InputRightElement h={"full"}>
+          <Button
+            variant="ghost"
+            size={"sm"}
+            onClick={() => setShowPassword(!showPassword)}
+          >
+            {showPassword ? <ViewIcon /> : <ViewOffIcon />}
+          </Button>
+        </InputRightElement>
+      </InputGroup>
+
+      {error && (
+        <Alert status="error" fontSize={13} p={2} borderRadius={4}>
+          <AlertIcon fontSize={12} />
+          {error.message}
+        </Alert>
+      )}
+      <Button
+        w={"full"}
+        colorScheme="blue"
+        isLoading={loading}
+        fontSize={14}
+        size={"sm"}
+        onClick={() => signUp(inputs)}
+      >
+        {"Sign Up"}
+      </Button>
+    </>
   );
 };
 
