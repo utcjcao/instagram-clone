@@ -1,24 +1,19 @@
-import { React, useState, useContext } from "react";
-import SignUpForm from "../components/SignUpForm";
-import { AuthContext } from "../components/AuthProvider";
-import LogOutButton from "../components/LogOutButton";
-import SignInForm from "../components/SignInForm";
+import { Container, Flex, VStack, Box, Image } from "@chakra-ui/react";
+import AuthForm from "../components/AuthForm/AuthForm";
 
 const LoginPage = () => {
-  const { isLoggedIn, setIsLoggedIn, userEmail } = useContext(AuthContext);
-
   return (
-    <>
-      {isLoggedIn ? (
-        <LogOutButton></LogOutButton>
-      ) : (
-        <div>
-          sign in here: <SignInForm></SignInForm>
-          or make a new account. bing bong
-          <SignUpForm></SignUpForm>
-        </div>
-      )}
-    </>
+    <Flex minH={"100vh"} justifyContent={"center"} alignItems={"center"} px={4}>
+      <Container maxW={"container.md"} padding={0}>
+        <Flex justifyContent={"center"} alignItems={"center"} gap={10}>
+          <VStack spacing={4} align={"stretch"}>
+            <Box textAlign={"center"}>HELLO</Box>
+            <AuthForm />
+            <Flex gap={5} justifyContent={"center"}></Flex>
+          </VStack>
+        </Flex>
+      </Container>
+    </Flex>
   );
 };
 
